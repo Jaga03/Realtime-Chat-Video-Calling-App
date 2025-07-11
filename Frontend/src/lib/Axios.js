@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const api = axios.create({
-    baseURL: import.meta.env.MODE === "development"?"http://localhost:5000/api" :"/api",
+    baseURL: "https://realtime-chat-video-calling-app.onrender.com/api",
     withCredentials:true,
     headers: {
     "Content-Type": "application/json", 
