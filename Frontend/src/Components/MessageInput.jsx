@@ -1,36 +1,37 @@
 import { useEffect, useRef, useState } from "react";
 import { useChatStore } from "../Store/useChatStore";
-import { Image, Send, XCircle } from "lucide-react";
+import { Image, Send, XCircle, Smile } from "lucide-react"; // Added Smile icon
 import toast from "react-hot-toast";
 import imageCompression from "browser-image-compression";
 import debounce from "lodash/debounce";
+import Picker from "emoji-picker-react"; // Import emoji picker
 
 const MessageInput = () => {
   const [text, setText] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
   const [compressedFile, setCompressedFile] = useState(null);
   const fileInputRef = useRef(null);
-  const { sendMessage,emitTyping, emitStopTyping } = useChatStore();
+  const { sendMessage, emitTyping, emitStopTyping } = useChatStore();
   const [isSending, setIsSending] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false); // State for emoji picker visibility
 
   useEffect(() => {
-  if (!text.trim()) {
-    emitStopTyping();
-    return;
-  }
+    if (!text.trim()) {
+      emitStopTyping();
+      return;
+    }
 
-  emitTyping();
+    emitTyping();
 
-  const stopTypingDebounced = debounce(() => {
-    emitStopTyping();
-  }, 1000); 
+    const stopTypingDebounced = debounce(() => {
+      emitStopTyping();
+    }, 1000);
 
-  stopTypingDebounced();
+    stopTypingDebounced();
 
-  return () => stopTypingDebounced.cancel();
-}, [text]);
-
+    return () => stopTypingDebounced.cancel();
+  }, [text]);
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
@@ -76,7 +77,6 @@ const MessageInput = () => {
       let base64Image = null;
 
       if (compressedFile) {
-        // Simulate image upload progress (since base64 doesn't naturally support progress)
         const reader = new FileReader();
         reader.readAsDataURL(compressedFile);
 
@@ -107,6 +107,11 @@ const MessageInput = () => {
     }
   };
 
+  const handleEmojiClick = (emojiData) => {
+    setText((prev) => prev + emojiData.emoji);
+    setShowEmojiPicker(false); // Hide picker after selection
+  };
+
   return (
     <div className="p-4 w-full text-base sm:text-lg text-base-content">
       {imagePreview && (
@@ -123,7 +128,7 @@ const MessageInput = () => {
             {!isSending && (
               <button
                 onClick={removeImage}
-                className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-base-300 flex items-center justify-center"
+                className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-base-200 flex items-center justify-center"
                 type="button"
               >
                 <XCircle className="size-3" />
@@ -143,7 +148,7 @@ const MessageInput = () => {
       )}
 
       <form onSubmit={handleSendMessage} className="flex items-center gap-2">
-        <div className="flex-1 flex gap-2">
+        <div className="flex-1 flex gap-2 relative"> {/* Added relative for positioning picker */}
           <input
             type="text"
             className="w-full input input-bordered rounded-lg input-sm text-base-content border-base-content sm:input-lg placeholder:text-base-content text-lg"
@@ -169,6 +174,22 @@ const MessageInput = () => {
           >
             <Image size={20} className="text-base-content" />
           </button>
+          <button
+            type="button"
+            className={`btn btn-circle bg-base-200 ${
+              isSending ? "text-zinc-400" : "text-base-content"
+            }`}
+            onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+            disabled={isSending}
+            title="Add Emoji"
+          >
+            <Smile size={20} />
+          </button>
+          {showEmojiPicker && (
+            <div className="absolute bottom-12 right-0 z-10">
+              <Picker onEmojiClick={handleEmojiClick} />
+            </div>
+          )}
         </div>
         <button
           type="submit"
@@ -176,11 +197,10 @@ const MessageInput = () => {
           disabled={!text.trim() && !imagePreview || isSending}
         >
           {isSending ? (
-  <span className="loading loading-spinner text-primary w-5 h-5" />
-) : (
-  <Send size={24} className="text-base-content" />
-)}
-
+            <span className="loading loading-spinner text-primary w-5 h-5" />
+          ) : (
+            <Send size={24} className="text-base-content" />
+          )}
         </button>
       </form>
     </div>
