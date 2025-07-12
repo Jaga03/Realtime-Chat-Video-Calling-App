@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useChatStore } from "../Store/useChatStore";
-import { Image, Send, XCircle, Smile } from "lucide-react"; // Added Smile icon
+import { Image, Send, XCircle, Smile } from "lucide-react"; 
 import toast from "react-hot-toast";
 import imageCompression from "browser-image-compression";
 import debounce from "lodash/debounce";
-import Picker from "emoji-picker-react"; // Import emoji picker
+import Picker from "emoji-picker-react"; 
 
 const MessageInput = () => {
   const [text, setText] = useState("");
@@ -14,7 +14,8 @@ const MessageInput = () => {
   const { sendMessage, emitTyping, emitStopTyping } = useChatStore();
   const [isSending, setIsSending] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false); // State for emoji picker visibility
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false); 
+  const emojiPickerRef = useRef(null)
 
   useEffect(() => {
     if (!text.trim()) {
@@ -109,8 +110,19 @@ const MessageInput = () => {
 
   const handleEmojiClick = (emojiData) => {
     setText((prev) => prev + emojiData.emoji);
-    setShowEmojiPicker(false); // Hide picker after selection
+    setShowEmojiPicker(false);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (emojiPickerRef.current && !emojiPickerRef.current.contains(event.target)) {
+        setShowEmojiPicker(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <div className="p-4 w-full text-base sm:text-lg text-base-content">
@@ -186,8 +198,12 @@ const MessageInput = () => {
             <Smile size={20} />
           </button>
           {showEmojiPicker && (
-            <div className="absolute bottom-12 right-0 z-10">
-              <Picker onEmojiClick={handleEmojiClick} />
+            <div ref={emojiPickerRef} className="absolute bottom-12 right-0 z-10">
+              <Picker
+                onEmojiClick={handleEmojiClick}
+                emojiStyle="twitter,native, google, facebook, apple" 
+                skinTonesDisabled={false}
+              />
             </div>
           )}
         </div>
