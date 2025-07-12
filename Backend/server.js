@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
 app.use(cookieParser());
 
-app.use(cors({ origin: ['http://localhost:5173','https://chatzup-app.vercel.app'], credentials: true }))
+app.use(cors({ origin: ['http://localhost:5173','https://chatzup-app.vercel.app/login'], credentials: true }))
 
 app.use('/api/auth',authRoutes)
 app.use('/api/message',messageRoutes)
