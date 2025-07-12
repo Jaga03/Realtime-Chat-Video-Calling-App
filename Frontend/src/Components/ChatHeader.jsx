@@ -14,6 +14,7 @@ const ChatHeader = () => {
     isAudioMuted,
     isVideoMuted,
     localStream,
+    setSelectedUser,
   } = useChatStore();
   const { onlineUsers } = useAuthStore();
 

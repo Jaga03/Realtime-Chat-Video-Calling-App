@@ -498,7 +498,7 @@ export const useChatStore = create((set, get) => ({
   },
 }));
 
-// Helper function to renegotiate the connection
+
 async function renegotiateConnection(peerConnection, localStream) {
   try {
     const offer = await peerConnection.createOffer();
