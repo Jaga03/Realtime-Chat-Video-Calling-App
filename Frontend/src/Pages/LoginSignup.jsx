@@ -83,7 +83,7 @@ const LoginSignup = () => {
       <div className="absolute inset-0 bg-base-100 z-0"></div>
 
       <div className="relative w-full max-w-5xl h-[600px] bg-base-100/90 backdrop-blur-lg rounded-3xl overflow-hidden border border-base-300 z-10">
-        {/* Logo + Tagline */}
+        
         <div className="absolute top-6 left-6 z-20">
           <h1 className="text-2xl font-bold text-base-content">
             Chatz<span className="text-base-content">Up</span>

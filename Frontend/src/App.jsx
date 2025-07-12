@@ -46,10 +46,10 @@ const App = () => {
     <div>
       <Navbar/>
       <Routes>
-        <Route path="/" element={authUser ? <Homepage/> : <Navigate to= '/Login&Signup'/>}/>
-        <Route path="/login&Signup" element={!authUser ? <LoginSignup/> : <Navigate to= '/'/>}/>
+        <Route path="/" element={authUser ? <Homepage/> : <Navigate to= '/login'/>}/>
+        <Route path="/login" element={!authUser ? <LoginSignup/> : <Navigate to= '/'/>}/>
         <Route path="/settings" element={<Settings/>}/>
-        <Route path="/profile" element={authUser ? <Profile/> : <Navigate to = '/login&Signup'/>}/>
+        <Route path="/profile" element={authUser ? <Profile/> : <Navigate to = '/login'/>}/>
       </Routes>
       
       
