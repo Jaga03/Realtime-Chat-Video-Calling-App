@@ -13,11 +13,13 @@ const io = new Server(server, {
   },
 });
 
-const userSocketMap = {};
+
 
 export function getReceiverSocketId(userId) {
   return userSocketMap[userId];
 }
+
+const userSocketMap = {};
 
 io.on("connection", (socket) => {
   console.log("A user connected", socket.id);
@@ -26,6 +28,12 @@ io.on("connection", (socket) => {
   console.log("Mapping userId:", userId, "to socketId:", socket.id);
   if (userId) userSocketMap[userId] = socket.id;
   io.emit("getOnlineUsers", Object.keys(userSocketMap));
+
+   socket.on("disconnect", () => {
+    console.log(`❌ User disconnected: ${userId}`);
+    delete userSocketMap[userId];
+    io.emit("getOnlineUsers", Object.keys(userSocketMap));
+  });
 
   socket.on("newMessage", ({ toUserId, message }) => {
     const receiverSocketId = userSocketMap[toUserId];
@@ -106,11 +114,7 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("disconnect", () => {
-    console.log(`❌ User disconnected: ${userId}`);
-    delete userSocketMap[userId];
-    io.emit("getOnlineUsers", Object.keys(userSocketMap));
-  });
+ 
 });
 
 export { io, server, app };
