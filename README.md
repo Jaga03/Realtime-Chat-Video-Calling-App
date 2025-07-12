@@ -48,7 +48,6 @@ ChatzUp is a modern, full-stack real-time chat and video calling application bui
 - **axios**: "^1.10.0" - HTTP client.
 - **clsx**: "^2.1.1" - Conditional class names.
 - **dompurify**: "^3.2.6" - HTML sanitization.
-- **framer-motion**: "^12.23.0" - Animations.
 - **lodash**: "^4.17.21" - Utilities (e.g., debounce).
 - **react-hot-toast**: "^2.5.2" - Notifications.
 - **react-router-dom**: "^7.6.3" - Routing.
