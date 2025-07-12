@@ -110,24 +110,24 @@ ChatzUp is a modern, full-stack real-time chat and video calling application bui
 
 6. Add Environment Variables:
 
-MONGODB_URI = ...
+   MONGODB_URI = ...
 
-PORT = 5000
+   PORT = 5000
 
-JWT_SECRET = ...
+   JWT_SECRET = ...
 
-CLOUDINARY_CLOUD_NAME = ....
+   CLOUDINARY_CLOUD_NAME = ....
 
-CLOUDINARY_API_KEY = .....
+   CLOUDINARY_API_KEY = .....
 
-CLOUDINARY_API_SECRET = .....
+   CLOUDINARY_API_SECRET = .....
 
 7. Deploy and note the backend URL (e.g., `https://realtime-chat-video-calling-app.onrender.com`).
 
 ### 🔹 Frontend (Vercel)
 
 1. Visit [https://vercel.com](https://vercel.com).
-2. Import your GitHub repository[https://github.com/Jaga03/Realtime-Chat-Video-Calling-App](https://github.com/jagathishkumar/chatzup).
+2. Import your GitHub repository [Github repository](https://github.com/Jaga03/Realtime-Chat-Video-Calling-App).
 3. In project settings:
 - **Root Directory**: `Frontend/`
 - **Framework Preset**: `Vite`
@@ -146,7 +146,9 @@ JWT_SECRET=your-secret-key-here
 NODE_ENV=production
 CLOUDINARY_URL=cloudinary://your-cloudinary-api-key:your-cloudinary-api-secret@your-cloud-name
 
-🤝 Contributing
+---
+
+## 🤝 Contributing
 
 1.Fork the repository.
 2.Create a feature branch (git checkout -b feature/new-feature).
@@ -154,10 +156,14 @@ CLOUDINARY_URL=cloudinary://your-cloudinary-api-key:your-cloudinary-api-secret@y
 4.Push to the branch (git push origin feature/new-feature).
 5.Open a Pull Request.
 
-👥 Credits
+---
+
+## 👥 Credits
 
 Created with ❤️ by Jagathish Kumar
 Special thanks to the open-source community for libraries like Socket.IO, WebRTC, and emoji-picker-react.
 
-📄 License
+---
+
+## 📄 License
 This project is licensed under the MIT License. See the LICENSE file for details.
