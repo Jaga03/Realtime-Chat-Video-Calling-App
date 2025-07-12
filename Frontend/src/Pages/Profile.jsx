@@ -42,7 +42,7 @@ const handlePasswordChange = async () => {
     toast.success("Password changed successfully");
     setPasswords({ currentPassword: "", newPassword: "", confirmPassword: "" });
     await logout();
-    navigate("/Login&Signup");
+    navigate("/login");
   } catch (error) {
     toast.error(error?.message || "Failed to change password");
   }
